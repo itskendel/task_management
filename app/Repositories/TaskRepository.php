@@ -42,7 +42,7 @@ class TaskRepository
         try {
             DB::beginTransaction();
 
-            $updated_data = $task->update($data);
+            $task->update($data);
 
             DB::commit();
 
