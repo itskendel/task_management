@@ -11,4 +11,9 @@ class Status extends Model
     use SoftDeletes;
 
     protected $fillable = ['name', 'desc'];
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
 }

@@ -3,8 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Task;
-use Exception;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Collection;
 
 class TaskRepository
 {
@@ -15,63 +14,23 @@ class TaskRepository
 
     public function retrieve()
     {
-        return Task::all();
+        return Task::get();
     }
 
     public function store(array $data)
     {
-        try {
-            DB::beginTransaction();
-
-            $created_data = Task::create($data);
-
-            DB::commit();
-
-            return true;
-        } catch (\Throwable $th) {
-            //throw $th;
-
-            DB::rollBack();
-
-            return false;
-        }
+        return Task::create($data);
     }
 
     public function update(Task $task, array $data)
     {
-        try {
-            DB::beginTransaction();
+        $task->update($data);
 
-            $task->update($data);
-
-            DB::commit();
-
-            return true;
-        } catch (\Throwable $th) {
-            //throw $th;
-
-            DB::rollBack();
-
-            return false;
-        }
+        return $task;
     }
 
     public function delete(Task $task)
     {
-        try {
-            DB::beginTransaction();
-
-            $task->delete();
-
-            DB::commit();
-
-            return true;
-        } catch (\Throwable $th) {
-            //throw $th;
-
-            DB::rollBack();
-
-            return false;
-        }
+        return $task->delete();
     }
 }

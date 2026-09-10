@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
+use App\Models\LogError;
 use App\Repositories\TaskRepository;
-use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Symfony\Component\HttpFoundation\Response;
 
 class TaskService
 {
@@ -11,52 +13,88 @@ class TaskService
 
     public function find(int $id)
     {
-        return $this->repository->find($id);
+        try {
+            $task = $this->repository->find($id);
+
+            return response()->json($task, 200);
+        } catch (ModelNotFoundException) {
+            return $this->not_found('show', $id);
+        } catch (\Throwable $e) {
+            return $this->server_error($e, 'show', $id);
+        }
     }
 
     public function retrieve()
     {
-        return $this->repository->retrieve();
+        try {
+            return response()->json($this->repository->retrieve(), 200);
+        } catch (\Throwable $e) {
+            return $this->server_error($e, 'index');
+        }
     }
 
-    public function store(Request $request)
+    public function store(array $data)
     {
-        $data = $request->validate([
-            ''
-        ]);
+        try {
+            $task = $this->repository->store($data);
 
-        $result = $this->repository->store($data);
-
-        if ($result) {
-            return;
+            return response()->json($task, 201);
+        } catch (\Throwable $e) {
+            return $this->server_error($e, 'store');
         }
-
-        return;
     }
 
-    public function update(Request $request, int $id)
+    public function update(int $id, array $data)
     {
-        $task = $this->repository->find($id);
-        $data = [];
-        $result = false;
+        try {
+            $task = $this->repository->update($this->repository->find($id), $data);
 
-        if (!$task) {
-            $data = $request->validate([]);
-
-            $result = $this->repository->update($task, $data);
+            return response()->json($task, 200);
+        } catch (ModelNotFoundException) {
+            return $this->not_found('update', $id);
+        } catch (\Throwable $e) {
+            return $this->server_error($e, 'update', $id);
         }
-
-        if ($result) {
-            return;
-        }
-
-        return;
     }
 
     public function delete(int $id)
     {
-        $task = $this->repository->find($id);
+        try {
+            $this->repository->delete($this->repository->find($id));
 
-        return $this->repository->delete($task);
+            return response()->json(['message' => 'Task deleted successfully.'], 200);
+        } catch (ModelNotFoundException) {
+            return $this->not_found('destroy', $id);
+        } catch (\Throwable $e) {
+            return $this->server_error($e, 'destroy', $id);
+        }
+    }
+
+    private function not_found(string $event = null, int $model_id = null)
+    {
+        $message = 'Task not found.';
+
+        LogError::create([
+            'model' => 'Task',
+            'model_id' => $model_id,
+            'event' => $event,
+            'desc' => $message
+        ]);
+
+        return response()->json(['message' => $message], 404);
+    }
+
+    private function server_error(\Throwable $e, string $event = null, int $model_id = null)
+    {
+        $message = 'Something went wrong.';
+
+        LogError::create([
+            'model' => 'Task',
+            'model_id' => $model_id,
+            'event' => $event,
+            'desc' => $message . ': ' . $e->getMessage()
+        ]);
+
+        return response()->json(['message' => $message], 500);
     }
 }
