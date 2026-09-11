@@ -15,6 +15,8 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/tasks/filter', [TaskController::class, 'filter']);
+    Route::get('/tasks/search', [TaskController::class, 'search']);
     Route::apiResource('/tasks', TaskController::class);
     Route::apiResource('/statuses', StatusController::class);
     Route::apiResource('/priorities', PriorityController::class);

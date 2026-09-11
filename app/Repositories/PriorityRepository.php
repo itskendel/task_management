@@ -8,7 +8,7 @@ class PriorityRepository
 {
     public function index()
     {
-        return Priority::get();
+        return Priority::paginate(10);
     }
 
     public function store(array $data)

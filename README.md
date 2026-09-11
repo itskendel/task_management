@@ -446,6 +446,76 @@ GET /api/tasks/{id}
 }
 ```
 
+#### GET — Filter tasks by status_id or priority_id
+
+```
+GET /api/tasks/filter?status_id=1
+GET /api/tasks/filter?priority_id=2
+GET /api/tasks/filter?status_id=1&priority_id=2
+```
+
+| Parameter     | Required | Rule                                   |
+| ------------- | -------- | -------------------------------------- |
+| `status_id`   | No       | Integer, must exist in Status object   |
+| `priority_id` | No       | Integer, must exist in Priority object |
+
+> At least one filter parameter must be provided.
+
+**Response (200):**
+
+```json
+[
+    {
+        "id": 1,
+        "status_id": 1,
+        "priority_id": 2,
+        "client_name": "John Doe",
+        "project_name": "Project Alpha",
+        "desc": "Project description",
+        "start_date": "2026-09-10",
+        "due_date": "2026-09-20",
+        "status": "Pending",
+        "priority": "High",
+        "created_at": "2026-09-10T10:00:00.000000Z",
+        "updated_at": "2026-09-10T10:00:00.000000Z"
+    }
+]
+```
+
+#### GET — Search tasks
+
+Searches tasks by keyword across `client_name`, `project_name`, and `desc`.
+
+```
+GET /api/tasks/search?q=John
+GET /api/tasks/search?q=Project Alpha
+```
+
+| Parameter | Required | Rule                 |
+| --------- | -------- | -------------------- |
+| `q`       | No       | String (search text) |
+
+**Response (200):**
+
+```json
+[
+    {
+        "id": 1,
+        "status_id": 1,
+        "priority_id": 2,
+        "client_name": "John Doe",
+        "project_name": "Project Alpha",
+        "desc": "Project description",
+        "start_date": "2026-09-10",
+        "due_date": "2026-09-20",
+        "status": "Pending",
+        "priority": "High",
+        "created_at": "2026-09-10T10:00:00.000000Z",
+        "updated_at": "2026-09-10T10:00:00.000000Z"
+    }
+]
+```
+
 #### POST — Store task
 
 ```

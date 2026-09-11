@@ -70,6 +70,24 @@ class TaskService
         }
     }
 
+    public function filter(array $filters)
+    {
+        try {
+            return response()->json($this->repository->filter($filters), 200);
+        } catch (\Throwable $e) {
+            return $this->server_error($e, 'filter');
+        }
+    }
+
+    public function search(?string $q)
+    {
+        try {
+            return response()->json($this->repository->search($q), 200);
+        } catch (\Throwable $e) {
+            return $this->server_error($e, 'search');
+        }
+    }
+
     private function not_found(?string $event = null, ?int $model_id = null)
     {
         $message = 'Task not found.';
