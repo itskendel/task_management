@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('priorities', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->longText('desc');
+            $table->longText('desc')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -70,7 +70,7 @@ class TaskService
         }
     }
 
-    private function not_found(?string $event = null, ?int $model_id = null): Response
+    private function not_found(?string $event = null, ?int $model_id = null)
     {
         $message = 'Task not found.';
 
@@ -79,7 +79,7 @@ class TaskService
         return response()->json(['message' => $message], 404);
     }
 
-    private function server_error(\Throwable $e, ?string $event = null, ?int $model_id = null): Response
+    private function server_error(\Throwable $e, ?string $event = null, ?int $model_id = null)
     {
         $message = 'Something went wrong.';
 
@@ -88,7 +88,7 @@ class TaskService
         return response()->json(['message' => $message], 500);
     }
 
-    private function log_error(string $model, ?int $model_id, ?string $event, string $desc): void
+    private function log_error(string $model, ?int $model_id, ?string $event, string $desc)
     {
         try {
             LogError::create([
