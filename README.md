@@ -1,6 +1,6 @@
 # Task Management
 
-## Instruction
+## Project Setup
 
 1. Rename `env.example` to `.env`
 2. Define the database connection: `sqlite`, `mysql`, or `redis`
@@ -31,9 +31,52 @@
 
    This generates the data sourced from the back-end repo `test_data.json`.
 
-## API
+> **Note:** If you are using a different `APP_URL`, use that instead of the examples below.
 
-> **Note:** `APP_URL` comes from the `.env` file (`APP_URL = ENV APP_URL`). If you are using a different `APP_URL`, use that instead.
+---
+
+## API Authentication
+
+### Register
+
+```
+POST /api/register
+```
+
+| Parameter              | Required |
+| ---------------------- | -------- |
+| `name`                 | Yes      |
+| `email`                | Yes      |
+| `password`             | Yes      |
+| `password_confirmation`| Yes      |
+
+### Login
+
+```
+POST /api/login
+```
+
+| Parameter  | Required |
+| ---------- | -------- |
+| `email`    | Yes      |
+| `password` | Yes      |
+
+Returns an access token. Use it in subsequent requests as a Bearer token.
+
+### Logout
+
+```
+POST /api/logout
+Authorization: Bearer <Token>
+```
+
+---
+
+## API Endpoints
+
+All endpoints below require authentication via `Authorization: Bearer <Token>`.
+
+> **Note:** `APP_URL` comes from your `.env` file. If you are using a different `APP_URL`, use that instead.
 
 ### Available Objects
 
@@ -41,71 +84,114 @@
 - Priority
 - Task
 
-### Task Endpoints
+---
+
+### Status
+
+#### GET — Retrieve statuses
+
+```
+GET /api/statuses
+GET /api/statuses/{id}
+```
+
+#### POST — Store status
+
+```
+POST /api/statuses
+```
+
+#### PUT / PATCH — Update status
+
+```
+PUT /api/statuses/{id}
+PATCH /api/statuses/{id}
+```
+
+#### DELETE — Delete status
+
+```
+DELETE /api/statuses/{id}
+```
+
+---
+
+### Priority
+
+#### GET — Retrieve priorities
+
+```
+GET /api/priorities
+GET /api/priorities/{id}
+```
+
+#### POST — Store priority
+
+```
+POST /api/priorities
+```
+
+#### PUT / PATCH — Update priority
+
+```
+PUT /api/priorities/{id}
+PATCH /api/priorities/{id}
+```
+
+#### DELETE — Delete priority
+
+```
+DELETE /api/priorities/{id}
+```
+
+---
+
+### Task
 
 #### GET — Retrieve task(s)
 
 Retrieves all tasks, or a single task when an `id` is provided.
 
-- `id` — optional
-
-Examples:
-
 ```
-APP_URL/api/tasks/1
-APP_URL/api/tasks
+GET /api/tasks
+GET /api/tasks/{id}
 ```
 
 #### POST — Store task
 
-Creates a new task.
-
-Endpoint:
-
 ```
-APP_URL/api/tasks
+POST /api/tasks
 ```
 
-Parameters:
-
-| Parameter       | Rule                                                    |
-| --------------- | ------------------------------------------------------- |
-| `status_id`     | required, must exist in the Status object               |
-| `priority_id`   | required, must exist in the Priority object             |
-| `client_name`   | required, string                                        |
-| `project_name`  | required, string                                        |
-| `desc`          | nullable, longText                                      |
-| `start_date`    | required, date                                          |
-| `due_date`      | required, date, must be after or equal to `start_date`  |
+| Parameter      | Required | Rule                                        |
+| -------------- | -------- | ------------------------------------------- |
+| `status_id`    | Yes      | Must exist in the Status object             |
+| `priority_id`  | Yes      | Must exist in the Priority object           |
+| `client_name`  | Yes      | String                                      |
+| `project_name` | Yes      | String                                      |
+| `desc`         | No       | Long text                                   |
+| `start_date`   | Yes      | Date                                        |
+| `due_date`     | Yes      | Date, must be after or equal to `start_date`|
 
 #### PUT / PATCH — Update task
 
-Updates an existing task.
-
-Endpoint:
-
 ```
-APP_URL/api/tasks/1
+PUT /api/tasks/{id}
+PATCH /api/tasks/{id}
 ```
 
-Parameters:
-
-| Parameter       | Rule                                                    |
-| --------------- | ------------------------------------------------------- |
-| `status_id`     | required, must exist in the Status object              |
-| `priority_id`   | required, must exist in the Priority object             |
-| `client_name`   | required, string                                        |
-| `project_name`  | required, string                                        |
-| `desc`          | nullable, longText                                      |
-| `start_date`    | required, date                                          |
-| `due_date`      | required, date, must be after or equal to `start_date`  |
+| Parameter      | Required | Rule                                        |
+| -------------- | -------- | ------------------------------------------- |
+| `status_id`    | Sometimes| Must exist in the Status object             |
+| `priority_id`  | Yes      | Must exist in the Priority object           |
+| `client_name`  | Yes      | String                                      |
+| `project_name` | Yes      | String                                      |
+| `desc`         | No       | Long text                                   |
+| `start_date`   | Yes      | Date                                        |
+| `due_date`     | Yes      | Date, must be after or equal to `start_date`|
 
 #### DELETE — Delete task
 
-Deletes an existing task.
-
-Endpoint:
-
 ```
-APP_URL/api/tasks/1
+DELETE /api/tasks/{id}
 ```
