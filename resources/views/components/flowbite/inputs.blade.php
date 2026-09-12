@@ -12,7 +12,7 @@
 
 @php
     $id = $name ? 'input-' . $name : 'input-' . uniqid();
-    $fieldClasses = 'block w-full rounded-base border bg-neutral-primary p-2.5 text-sm text-heading placeholder:text-body-subtle transition-colors focus:outline-none focus:ring-2 ' . ($error ? 'border-danger focus:border-danger focus:ring-danger/30' : 'border-default focus:border-brand focus:ring-brand/30');
+    $fieldClasses = 'block w-full rounded-base border bg-neutral-primary p-2.5 text-sm text-heading placeholder:text-body-subtle transition-colors focus:outline-none focus:ring-2 ' . ($error ? 'border-danger focus:border-danger focus:ring-danger/30' : 'border-default focus:border-ring focus:ring-ring');
 @endphp
 
 <div class="w-full">

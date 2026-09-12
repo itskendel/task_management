@@ -17,7 +17,7 @@
 @endphp
 
 <button type="button" data-modal-target="{{ $id }}" data-modal-toggle="{{ $id }}"
-    {{ $attributes->merge(['class' => 'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-base bg-brand px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-strong focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2']) }}>
+    {{ $attributes->merge(['class' => 'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-base bg-brand px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-strong focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2']) }}>
     @isset($trigger)
         {{ $trigger }}
     @else
@@ -36,7 +36,7 @@
                     </h3>
                     @if($closable)
                         <button type="button" data-modal-hide="{{ $id }}"
-                            class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-base text-body transition-colors hover:bg-neutral-secondary-medium hover:text-heading focus:outline-none focus:ring-2 focus:ring-gray-300"
+                            class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-base text-body transition-colors hover:bg-neutral-secondary-medium hover:text-heading focus:outline-none focus:ring-2 focus:ring-ring"
                             aria-label="Close">
                             <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
                                 height="24" fill="none" viewBox="0 0 24 24">

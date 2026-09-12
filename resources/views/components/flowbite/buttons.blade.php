@@ -9,12 +9,12 @@
 
 @php
     $variants = [
-        'primary' => 'bg-brand text-white hover:bg-brand-strong focus:ring-blue-300',
-        'secondary' => 'bg-neutral-primary border border-default text-heading hover:bg-neutral-secondary-medium focus:ring-gray-300',
-        'outline' => 'border border-default text-body hover:bg-neutral-secondary-medium hover:text-heading focus:ring-gray-200',
-        'danger' => 'bg-danger text-white hover:bg-danger-strong focus:ring-rose-300',
-        'success' => 'bg-success text-white hover:bg-success-strong focus:ring-emerald-300',
-        'ghost' => 'text-body hover:bg-neutral-secondary-medium hover:text-heading focus:ring-gray-200',
+        'primary' => 'bg-brand text-white hover:bg-brand-strong focus:ring-ring',
+        'secondary' => 'bg-neutral-primary border border-default text-heading hover:bg-neutral-secondary-medium focus:ring-ring',
+        'outline' => 'border border-default text-body hover:bg-neutral-secondary-medium hover:text-heading focus:ring-ring',
+        'danger' => 'bg-danger text-white hover:bg-danger-strong focus:ring-ring',
+        'success' => 'bg-success text-white hover:bg-success-strong focus:ring-ring',
+        'ghost' => 'text-body hover:bg-neutral-secondary-medium hover:text-heading focus:ring-ring',
     ];
 
     $sizes = [

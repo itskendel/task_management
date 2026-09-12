@@ -20,7 +20,7 @@
         'underline' => [
             'container' => 'flex flex-wrap -mb-px gap-x-2 border-b border-default text-sm font-medium text-center',
             'button' =>
-                'inline-block p-4 border-b-2 rounded-t-base transition-colors focus:outline-none focus:ring-2 focus:ring-brand/30',
+                'inline-block p-4 border-b-2 rounded-t-base transition-colors focus:outline-none focus:ring-2 focus:ring-ring',
             'active' => 'text-fg-brand border-brand',
             'inactive' => 'border-transparent text-body hover:text-heading hover:border-default',
             'panel' => 'p-4'
@@ -28,7 +28,7 @@
         'pills' => [
             'container' => 'flex flex-wrap gap-2 text-sm font-medium',
             'button' =>
-                'inline-flex items-center justify-center px-4 py-2 rounded-base transition-colors focus:outline-none focus:ring-2 focus:ring-brand/30',
+                'inline-flex items-center justify-center px-4 py-2 rounded-base transition-colors focus:outline-none focus:ring-2 focus:ring-ring',
             'active' => 'bg-brand text-white',
             'inactive' => 'text-body hover:text-heading hover:bg-neutral-secondary-medium',
             'panel' => 'p-4'

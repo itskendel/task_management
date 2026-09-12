@@ -38,7 +38,7 @@
         {{ $message }}
     </div>
     <button type="button" data-dismiss-target="#{{ $id }}" aria-label="Close"
-        class="ms-auto -mx-1.5 -my-1.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-base bg-neutral-primary p-1.5 text-body-subtle transition-colors hover:bg-neutral-secondary-medium hover:text-heading focus:outline-none focus:ring-2 focus:ring-gray-300">
+        class="ms-auto -mx-1.5 -my-1.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-base bg-neutral-primary p-1.5 text-body-subtle transition-colors hover:bg-neutral-secondary-medium hover:text-heading focus:outline-none focus:ring-2 focus:ring-ring">
         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
             viewBox="0 0 24 24">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
