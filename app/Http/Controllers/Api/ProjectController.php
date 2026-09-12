@@ -6,8 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Services\ProjectService;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Throwable;
 
 class ProjectController extends Controller
 {
@@ -15,36 +16,72 @@ class ProjectController extends Controller
 
     public function index()
     {
-        return $this->task_service->retrieve();
+        try {
+            return $this->success($this->task_service->retrieve());
+        } catch (Throwable $e) {
+            return $this->serverError($e, 'Task', null, 'index');
+        }
     }
 
     public function store(StoreProjectRequest $request)
     {
-        return $this->task_service->store($request->validated());
+        try {
+            return $this->success($this->task_service->store($request->validated()), 201);
+        } catch (Throwable $e) {
+            return $this->serverError($e, 'Task', null, 'store');
+        }
     }
 
     public function show(int $id)
     {
-        return $this->task_service->find($id);
+        try {
+            return $this->success($this->task_service->find($id));
+        } catch (ModelNotFoundException) {
+            return $this->notFound('Task not found.', 'Task', $id, 'show');
+        } catch (Throwable $e) {
+            return $this->serverError($e, 'Task', $id, 'show');
+        }
     }
 
     public function update(UpdateProjectRequest $request, int $id)
     {
-        return $this->task_service->update($id, $request->validated());
+        try {
+            return $this->success($this->task_service->update($id, $request->validated()));
+        } catch (ModelNotFoundException) {
+            return $this->notFound('Task not found.', 'Task', $id, 'update');
+        } catch (Throwable $e) {
+            return $this->serverError($e, 'Task', $id, 'update');
+        }
     }
 
     public function destroy(int $id)
     {
-        return $this->task_service->delete($id);
+        try {
+            $this->task_service->delete($id);
+
+            return $this->success(['message' => 'Task deleted successfully.']);
+        } catch (ModelNotFoundException) {
+            return $this->notFound('Task not found.', 'Task', $id, 'destroy');
+        } catch (Throwable $e) {
+            return $this->serverError($e, 'Task', $id, 'destroy');
+        }
     }
 
     public function filter(Request $request)
     {
-        return $this->task_service->filter($request->only('status_id', 'priority_id'));
+        try {
+            return $this->success($this->task_service->filter($request->only('status_id', 'priority_id')));
+        } catch (Throwable $e) {
+            return $this->serverError($e, 'Task', null, 'filter');
+        }
     }
 
     public function search(Request $request)
     {
-        return $this->task_service->search($request->input('q'));
+        try {
+            return $this->success($this->task_service->search($request->input('q')));
+        } catch (Throwable $e) {
+            return $this->serverError($e, 'Task', null, 'search');
+        }
     }
 }

@@ -2,11 +2,11 @@
 
 namespace App\Services;
 
-use App\Repositories\PriorityRepository;
+use App\Repositories\TaskRepository;
 
-class PriorityService
+class TaskService
 {
-    public function __construct(protected PriorityRepository $repository) {}
+    public function __construct(protected TaskRepository $repository) {}
 
     public function index()
     {
@@ -30,6 +30,6 @@ class PriorityService
 
     public function destroy(int $id)
     {
-        $this->repository->destroy($this->repository->show($id));
+        return $this->repository->destroy($this->repository->show($id));
     }
 }

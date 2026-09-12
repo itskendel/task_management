@@ -18,7 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
         //     : response()->json(['message' => 'Unauthenticated.'], 401)
         // );
         $middleware->alias([
-            'api_authentication' => \App\Http\Middleware\AuthAPI::class,
+            'api_auth' => \App\Http\Middleware\AuthAPI::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

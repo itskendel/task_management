@@ -3,15 +3,15 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreStatusRequest;
-use App\Http\Requests\UpdateStatusRequest;
-use App\Services\StatusService;
+use App\Http\Requests\StoreTaskRequest;
+use App\Http\Requests\UpdateTaskRequest;
+use App\Services\TaskService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Throwable;
+use Illuminate\Http\Request;
 
-class StatusController extends Controller
+class TaskController extends Controller
 {
-    public function __construct(protected StatusService $service) {}
+    public function __construct(protected TaskService $service) {}
 
     /**
      * Display a listing of the resource.
@@ -20,20 +20,20 @@ class StatusController extends Controller
     {
         try {
             return $this->success($this->service->index());
-        } catch (Throwable $e) {
-            return $this->serverError($e, 'Status', null, 'index');
+        } catch (\Throwable $th) {
+            return $this->serverError($th, 'Task', null, 'index');
         }
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreStatusRequest $request)
+    public function store(StoreTaskRequest $request)
     {
         try {
             return $this->success($this->service->store($request->validated()));
-        } catch (Throwable $e) {
-            return $this->serverError($e, 'Status', null, 'store');
+        } catch (\Throwable $th) {
+            return $this->serverError($th, 'Task', null, 'store');
         }
     }
 
@@ -45,23 +45,23 @@ class StatusController extends Controller
         try {
             return $this->success($this->service->show($id));
         } catch (ModelNotFoundException) {
-            return $this->notFound('Status not found.', 'Status', $id, 'show');
-        } catch (Throwable $e) {
-            return $this->serverError($e, 'Status', $id, 'show');
+            return $this->notFound('Task not found.', 'Task', $id, 'show');
+        } catch (\Throwable $th) {
+            return $this->serverError($th, 'Task', $id, 'show');
         }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateStatusRequest $request, int $id)
+    public function update(UpdateTaskRequest $request, int $id)
     {
         try {
             return $this->success($this->service->update($id, $request->validated()));
         } catch (ModelNotFoundException) {
-            return $this->notFound('Status not found.', 'Status', $id, 'update');
-        } catch (Throwable $e) {
-            return $this->serverError($e, 'Status', $id, 'update');
+            return $this->notFound('Task not found.', 'Task', $id, 'update');
+        } catch (\Throwable $th) {
+            return $this->serverError($th, 'Task', $id, 'update');
         }
     }
 
@@ -73,11 +73,11 @@ class StatusController extends Controller
         try {
             $this->service->destroy($id);
 
-            return $this->success(['message' => 'Status deleted successfully.']);
+            return $this->success(['message' => 'Task deleted successfully.']);
         } catch (ModelNotFoundException) {
-            return $this->notFound('Status not found.', 'Status', $id, 'delete');
-        } catch (Throwable $e) {
-            return $this->serverError($e, 'Status', $id, 'delete');
+            return $this->notFound('Task not found.', 'Task', $id, 'delete');
+        } catch (\Throwable $th) {
+            return $this->serverError($th, 'Task', $id, 'delete');
         }
     }
 }

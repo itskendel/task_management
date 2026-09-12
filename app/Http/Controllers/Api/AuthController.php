@@ -38,9 +38,9 @@ class AuthController extends Controller
             'password' => 'required|string',
         ]);
 
-        if (!Auth::attempt($credentials)) {
+        if (! Auth::attempt($credentials)) {
             return response()->json([
-                'message' => 'Unauthorized: Invalid credentials provided.'
+                'message' => 'Unauthorized: Invalid credentials provided.',
             ], 401);
         }
 
@@ -50,7 +50,7 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token_result->plainTextToken,
             'token_type' => 'Bearer',
-            'expires_at' => $token_result->accessToken->expires_at
+            'expires_at' => $token_result->accessToken->expires_at,
         ], 200);
     }
 
@@ -59,7 +59,7 @@ class AuthController extends Controller
         $request->user()->currentAccessToken()->delete();
 
         return response()->json([
-            'message' => 'Successfully logged out and token revoked.'
+            'message' => 'Successfully logged out and token revoked.',
         ], 200);
     }
 }

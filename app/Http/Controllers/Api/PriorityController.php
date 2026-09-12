@@ -6,17 +6,23 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePriorityRequest;
 use App\Http\Requests\UpdatePriorityRequest;
 use App\Services\PriorityService;
-use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Throwable;
 
 class PriorityController extends Controller
 {
     public function __construct(protected PriorityService $service) {}
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return $this->service->index();
+        try {
+            return $this->success($this->service->index());
+        } catch (Throwable $e) {
+            return $this->serverError($e, 'Priority', null, 'index');
+        }
     }
 
     /**
@@ -24,7 +30,11 @@ class PriorityController extends Controller
      */
     public function store(StorePriorityRequest $request)
     {
-        return $this->service->store($request->validated());
+        try {
+            return $this->success($this->service->store($request->validated()));
+        } catch (Throwable $e) {
+            return $this->serverError($e, 'Priority', null, 'store');
+        }
     }
 
     /**
@@ -32,7 +42,13 @@ class PriorityController extends Controller
      */
     public function show(int $id)
     {
-        return $this->service->show($id);
+        try {
+            return $this->success($this->service->show($id));
+        } catch (ModelNotFoundException) {
+            return $this->notFound('Priority not found.', 'Priority', $id, 'show');
+        } catch (Throwable $e) {
+            return $this->serverError($e, 'Priority', $id, 'show');
+        }
     }
 
     /**
@@ -40,7 +56,13 @@ class PriorityController extends Controller
      */
     public function update(UpdatePriorityRequest $request, int $id)
     {
-        return $this->service->update($id, $request->validated());
+        try {
+            return $this->success($this->service->update($id, $request->validated()));
+        } catch (ModelNotFoundException) {
+            return $this->notFound('Priority not found.', 'Priority', $id, 'update');
+        } catch (Throwable $e) {
+            return $this->serverError($e, 'Priority', $id, 'update');
+        }
     }
 
     /**
@@ -48,6 +70,14 @@ class PriorityController extends Controller
      */
     public function destroy(int $id)
     {
-        return $this->service->destroy($id);
+        try {
+            $this->service->destroy($id);
+
+            return $this->success(['message' => 'Priority deleted successfully.']);
+        } catch (ModelNotFoundException) {
+            return $this->notFound('Priority not found.', 'Priority', $id, 'delete');
+        } catch (Throwable $e) {
+            return $this->serverError($e, 'Priority', $id, 'delete');
+        }
     }
 }
