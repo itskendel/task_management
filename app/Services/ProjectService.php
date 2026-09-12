@@ -3,13 +3,13 @@
 namespace App\Services;
 
 use App\Models\LogError;
-use App\Repositories\TaskRepository;
+use App\Repositories\ProjectRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpFoundation\Response;
 
-class TaskService
+class ProjectService
 {
-    public function __construct(protected TaskRepository $repository) {}
+    public function __construct(protected ProjectRepository $repository) {}
 
     public function find(int $id)
     {

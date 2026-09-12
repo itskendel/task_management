@@ -13,10 +13,13 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->redirectGuestsTo(fn (Request $request) => $request->is('api/*')
-            ? response()->json(['message' => 'Unauthenticated.'], 401)
-            : response()->json(['message' => 'Unauthenticated.'], 401)
-        );
+        // $middleware->redirectGuestsTo(fn (Request $request) => $request->is('api/*')
+        //     ? response()->json(['message' => 'Unauthenticated.'], 401)
+        //     : response()->json(['message' => 'Unauthenticated.'], 401)
+        // );
+        $middleware->alias([
+            'api_authentication' => \App\Http\Middleware\AuthAPI::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(

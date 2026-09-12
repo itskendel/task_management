@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Priority;
+use App\Models\Project;
 use App\Models\Status;
-use App\Models\Task;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -161,7 +161,7 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($tasks as $task) {
-            Task::create($task);
+            Project::create($task);
         }
     }
 }

@@ -3,22 +3,22 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreTaskRequest;
-use App\Http\Requests\UpdateTaskRequest;
-use App\Services\TaskService;
+use App\Http\Requests\StoreProjectRequest;
+use App\Http\Requests\UpdateProjectRequest;
+use App\Services\ProjectService;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class TaskController extends Controller
+class ProjectController extends Controller
 {
-    public function __construct(protected TaskService $task_service) {}
+    public function __construct(protected ProjectService $task_service) {}
 
     public function index()
     {
         return $this->task_service->retrieve();
     }
 
-    public function store(StoreTaskRequest $request)
+    public function store(StoreProjectRequest $request)
     {
         return $this->task_service->store($request->validated());
     }
@@ -28,7 +28,7 @@ class TaskController extends Controller
         return $this->task_service->find($id);
     }
 
-    public function update(UpdateTaskRequest $request, int $id)
+    public function update(UpdateProjectRequest $request, int $id)
     {
         return $this->task_service->update($id, $request->validated());
     }
