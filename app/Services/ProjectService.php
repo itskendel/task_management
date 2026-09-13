@@ -13,9 +13,9 @@ class ProjectService
         return $this->repository->find($id);
     }
 
-    public function retrieve()
+    public function retrieve(?string $search = null, ?array $filter = null)
     {
-        return $this->repository->retrieve();
+        return $this->repository->retrieve($search, $filter);
     }
 
     public function store(array $data)

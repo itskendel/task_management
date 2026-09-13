@@ -14,16 +14,16 @@
                 </svg>
             </button>
 
-            <a href="{{ url('/') }}" class="flex items-center gap-2.5">
-                <span
+            <a href="" class="flex items-center gap-2.5">
+                {{-- <span
                     class="flex h-8 w-8 items-center justify-center rounded-base bg-brand text-white transition-colors hover:bg-brand-strong">
                     <svg aria-hidden="true" class="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
                             d="m5 12 5 5L20 7" />
                     </svg>
-                </span>
-                <span class="self-center text-lg font-semibold tracking-tight text-heading">Taskly</span>
+                </span> --}}
+                <span class="self-center text-lg font-semibold tracking-tight text-heading">TASK M</span>
             </a>
 
             <form action="#" method="GET" class="hidden pl-4 md:block">

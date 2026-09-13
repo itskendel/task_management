@@ -18,11 +18,11 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('api_auth')->group(function () {
     // Resource
-    Route::apiResource('/statuses', StatusController::class);
-    Route::apiResource('/priorities', PriorityController::class);
-    Route::apiResource('/projects', ProjectController::class);
-    Route::apiResource('/tasks', TaskController::class);
-    Route::apiResource('/sub_tasks', SubTaskController::class);
+    Route::apiResource('/statuses', StatusController::class)->names('api.statuses');
+    Route::apiResource('/priorities', PriorityController::class)->names('api.priorities');
+    Route::apiResource('/projects', ProjectController::class)->names('api.projects');
+    Route::apiResource('/tasks', TaskController::class)->names('api.tasks');
+    Route::apiResource('/sub_tasks', SubTaskController::class)->names('api.sub_tasks');
 
     // Custom
     Route::get('/projects/filter', [ProjectController::class, 'filter']);

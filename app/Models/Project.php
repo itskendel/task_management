@@ -12,7 +12,6 @@ class Project extends Model
 
     protected $fillable = ['status_id', 'priority_id', 'client_name', 'project_name', 'desc', 'start_date', 'due_date'];
     protected $appends = ['status', 'priority'];
-    protected $hidden = ['status_model', 'priority_model'];
 
     public function status_model()
     {
@@ -32,5 +31,10 @@ class Project extends Model
     public function getPriorityAttribute()
     {
         return $this->priority_model?->name;
+    }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
     }
 }

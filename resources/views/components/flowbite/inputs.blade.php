@@ -6,12 +6,13 @@
     'value' => null,
     'error' => null,
     'hint' => null,
+    'id' => null,
     'required' => false,
     'disabled' => false,
 ])
 
 @php
-    $id = $name ? 'input-' . $name : 'input-' . uniqid();
+    $id = $id ?: ($name ? 'input-' . $name : 'input-' . uniqid());
     $fieldClasses = 'block w-full rounded-base border bg-neutral-primary p-2.5 text-sm text-heading placeholder:text-body-subtle transition-colors focus:outline-none focus:ring-2 ' . ($error ? 'border-danger focus:border-danger focus:ring-danger/30' : 'border-default focus:border-ring focus:ring-ring');
 @endphp
 
@@ -25,7 +26,7 @@
         </label>
     @endif
 
-    <input type="{{ $type }}" id="{{ $id }}" name="{{ $name }}" value="{{ $value }}"
+    <input type="{{ $type }}" id="{{ $id }}" name="{{ $name }}" value="{{ old($name, $value) }}"
         placeholder="{{ $placeholder }}" @required($required) @disabled($disabled)
         {{ $attributes->merge(['class' => $fieldClasses]) }}
         aria-invalid="{{ $error ? 'true' : 'false' }}"

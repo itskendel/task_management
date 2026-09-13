@@ -8,10 +8,11 @@
     'hint' => null,
     'required' => false,
     'disabled' => false,
+    'id' => null,
 ])
 
 @php
-    $id = $name ? 'textarea-' . $name : 'textarea-' . uniqid();
+    $id = $id ?: ($name ? 'textarea-' . $name : 'textarea-' . uniqid());
     $fieldClasses = 'block w-full resize-y rounded-base border bg-neutral-primary p-2.5 text-sm text-heading placeholder:text-body-subtle transition-colors focus:outline-none focus:ring-2 ' . ($error ? 'border-danger focus:border-danger focus:ring-danger/30' : 'border-default focus:border-ring focus:ring-ring');
 @endphp
 
@@ -29,7 +30,7 @@
         placeholder="{{ $placeholder }}" @required($required) @disabled($disabled)
         {{ $attributes->merge(['class' => $fieldClasses]) }}
         aria-invalid="{{ $error ? 'true' : 'false' }}"
-        @if($error) aria-describedby="{{ $id }}-error" @endif>{{ $value }}</textarea>
+        @if($error) aria-describedby="{{ $id }}-error" @endif>{{ old($name, $value) }}</textarea>
 
     @if($error)
         <p id="{{ $id }}-error" class="mt-1.5 text-xs text-fg-danger">{{ $error }}</p>

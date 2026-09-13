@@ -12,9 +12,31 @@ class ProjectRepository
         return Project::findOrFail($id);
     }
 
-    public function retrieve()
+    public function retrieve(?string $search = null, ?array $filter = null)
     {
-        return Project::paginate(10);
+        $query = Project::query();
+
+        $query->when($search, function ($query) use ($search) {
+            $query->where(function ($query) use ($search) {
+                $query->where('project_name', 'like', "%{$search}%")
+                    ->orWhere('client_name', 'like', "%{$search}%")
+                    ->orWhere('desc', 'like', "%{$search}%");
+            });
+        });
+
+        $query->when($filter, function ($query) use ($filter) {
+            $query->when(
+                $filter['status_id'] ?? null,
+                fn($query, $status_id) => $query->where('status_id', $status_id)
+            );
+
+            $query->when(
+                $filter['priority_id'] ?? null,
+                fn($query, $priority_id) => $query->where('priority_id', $priority_id)
+            );
+        });
+
+        return $query->oldest('due_date')->paginate(10);
     }
 
     public function store(array $data)

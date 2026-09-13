@@ -8,7 +8,7 @@ class StatusRepository
 {
     public function index()
     {
-        return Status::paginate(10);
+        return Status::get();
     }
 
     public function store(array $data)
