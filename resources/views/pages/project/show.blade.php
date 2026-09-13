@@ -149,9 +149,6 @@
                         {{-- Description --}}
                         <x-flowbite.text-area name="desc" :id="'sub_task_desc_' . $task->id" label="Description" rows="3"
                             placeholder="Describe the sub-task" />
-
-                        {{-- Due Date --}}
-                        <x-flowbite.inputs name="due_date" :id="'due_date_' . $task->id" type="date" label="Due Date" />
                     </div>
 
                     <x-slot name="footer">
